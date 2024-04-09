@@ -16,7 +16,7 @@ int main()
     vector<int> nums;
     cout << "Enter integers in array (-1 to exit) : \n";
     int n;
-    while (n != -1)
+    while (n != -1) 
     { 
         cin >> n;
         if (n != -1)

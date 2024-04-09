@@ -1,5 +1,5 @@
 #include <iostream>
-using namespace std;
+using namespace std; 
 
 int calcGCD(int n, int m){
     // Write your code here.

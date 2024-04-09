@@ -2,7 +2,7 @@
  
 // Node structure for the binary tree
 struct Node {
-    int data;
+    int data; 
     Node* left;
     Node* right;
 

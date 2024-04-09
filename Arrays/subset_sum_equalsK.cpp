@@ -3,7 +3,7 @@
 using namespace std; 
 
 bool subset_sum(int index, vector<int> &arr, int sum){
-    if(index == (arr.size()-1)){
+    if(index == (arr.size()-1)){ 
         if(sum>arr[index])
             return false;
     }

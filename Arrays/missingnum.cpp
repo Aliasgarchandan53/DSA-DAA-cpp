@@ -3,7 +3,7 @@
 #include <algorithm>
 using namespace std;
  
-int missingNumber(vector<int> &nums)
+int missingNumber(vector<int> &nums) 
 {
     int max = nums.size();
     int sum = (max*(max+1))/2;

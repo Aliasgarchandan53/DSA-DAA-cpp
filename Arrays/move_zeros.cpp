@@ -3,7 +3,7 @@
 #include <algorithm>
 using namespace std;
  
-void moveZeroes(vector<int> &nums)
+void moveZeroes(vector<int> &nums) 
 {
     int i = 0;
     for (int j = 0; j < nums.size(); j++)
