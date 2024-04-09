@@ -2,7 +2,7 @@
 #include <vector>
 #include <algorithm>
 using namespace std;
-
+ 
 int missingNumber(vector<int> &nums)
 {
     int max = nums.size();

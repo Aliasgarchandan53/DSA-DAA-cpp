@@ -3,7 +3,7 @@ using namespace std;
 
 int calcGCD(int n, int m){
     // Write your code here.
-    int gcd=0;
+    int gcd=0; 
     int min = (m<n)?m:n;
     for(int i=min;i>=1;i--){
         if(((m%i)==0)&&((n%i)==0)){

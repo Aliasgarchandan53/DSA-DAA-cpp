@@ -83,7 +83,7 @@ bool isPalindrome(string s) {
 
 int main(){
     if(isPalindrome("A man, a plan, a canal: Panama"))
-    cout<<"string is palindrome";
+    cout<<"string is palindrome"; 
     else    
         cout<<"string is not palindrome.";
     return 0;

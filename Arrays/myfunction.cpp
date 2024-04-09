@@ -15,7 +15,7 @@ int main(){
     int choice;
     cout<<"Enter choice :\n";
     cin>>choice;
-    int a,b;
+    int a,b; 
     cout<<"Pass two integers a and b :\n";
     cin>>a>>b;
     switch(choice){

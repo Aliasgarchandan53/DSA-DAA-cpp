@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-using namespace std;
+using namespace std; 
 
 bool subset_sum(int index, vector<int> &arr, int sum){
     if(index == (arr.size()-1)){

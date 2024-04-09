@@ -17,7 +17,7 @@ int main()
     cout << "Enter integers in array (-1 to exit) : \n";
     int n;
     while (n != -1)
-    {
+    { 
         cin >> n;
         if (n != -1)
             nums.push_back(n);

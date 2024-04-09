@@ -4,7 +4,7 @@ using namespace std;
 
 vector<int> sortedArray(vector<int> a, vector<int> b)
 {
-    // Write your code here
+    // Write your code here 
     int i = 0;
     int j = 0;
     vector<int> uni;

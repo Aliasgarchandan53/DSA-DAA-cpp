@@ -2,8 +2,8 @@ bool check(vector<int> arr,int e){
     for(int i=0;i<arr.size();i++){
         if(arr[i]==e)
             return true;
-    }
-    return false;
+    } 
+    return false; 
 }
 
 vector < int > sortedArray(vector < int > a, vector < int > b) {

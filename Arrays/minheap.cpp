@@ -1,5 +1,5 @@
 #include <iostream>
-
+ 
 // Node structure for the binary tree
 struct Node {
     int data;
