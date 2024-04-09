@@ -1,0 +1,12 @@
+Space complexity : sum of inout space and auxillary space
+    input-space: space required to store the problem.
+    auxillary space : space required to solve the problem.
+
+Example : c = a+b 
+    input space : a,b ie O(1)
+    auxillary space : c ie O(1)
+
+Note : never manipulate the given input data even if in order to save space.
+    This might be tempting but not a preferred approach.
+
+Usual server space : 1 second ~ 10^8operations.
