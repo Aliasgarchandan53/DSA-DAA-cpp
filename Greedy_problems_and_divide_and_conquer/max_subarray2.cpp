@@ -3,34 +3,48 @@
 using namespace std;
 
 int max_sub_sum(int[], int, int);
-int cross_sum(int arr[], int low, int mid, int high);
+int cross_sum(int arr[], int low, int mid, int high,int *l,int *h);
 
+int indLow,indHigh;
 int max_sub_sum(int arr[], int low, int high)
 {
+    int l,h;
     if (low == high)
         return arr[low];
     int mid = low + (high - low) / 2;
     int leftsum = max_sub_sum(arr, low, mid);
     int rightsum = max_sub_sum(arr, mid + 1, high);
-    int crossSum = cross_sum(arr, low, mid, high);
-    return max(crossSum, max(rightsum, leftsum));
+    int crossSum = cross_sum(arr, low, mid, high,&l,&h);
+    int maxs;
+    if(crossSum > max(rightsum, leftsum)){
+        maxs=crossSum;
+        indLow=l;
+        indHigh=h;
+    }else{
+        maxs=max(leftsum,rightsum);
+    }
+    return maxs ;
 }
 
-int cross_sum(int arr[], int low, int mid, int high)
+int cross_sum(int arr[], int low, int mid, int high,int*l, int*h)
 {
     int sum = 0, leftsum = INT_MIN, rightsum = INT_MIN;
     for (int i = mid; i >= low; i--)
     {
         sum += arr[i];
-        if (leftsum < sum)
+        if (leftsum < sum){
             leftsum = sum;
+            *l=i;
+        }
     }
     sum = 0;
     for (int i = (mid + 1); i <= high; i++)
     {
         sum += arr[i];
-        if (rightsum < sum)
+        if (rightsum < sum){
             rightsum = sum;
+            *h=i;
+        }
     }
     return (leftsum + rightsum);
 }
@@ -46,6 +60,12 @@ int main()
         cin >> arr[i];
     int max_sum = max_sub_sum(arr, 0, n - 1);
     cout << "maximum subarray sum is : " << max_sum << endl;
+    cout<<"Maximum subarray is : "<<endl;
+    cout<<"[ ";
+    for(int i=indLow;i<=indHigh;i++){
+        cout<<arr[i]<<", ";
+    }
+    cout<<"]"<<endl;
     return 0;
 }
 
