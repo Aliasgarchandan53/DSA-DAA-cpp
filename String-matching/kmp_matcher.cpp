@@ -23,8 +23,7 @@ class KMP{
         int len = 0 , i=1;
         while(i<m){
             if(pat[i]==pat[len]){
-                LPS_table[i]=(++len);
-                i++;
+                LPS_table[i++]=(++len);
             }
             else{
                 if(len !=0)
