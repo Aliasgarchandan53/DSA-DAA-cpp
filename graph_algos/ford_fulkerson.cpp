@@ -1,87 +1,68 @@
-#include <iostream>
-#include <vector>
-#include <queue>
-#include <algorithm>
-#include <cstring>
-
+#include <bits/stdc++.h>
 using namespace std;
 
-const int INF = 1e9;
+bool dfs(vector<vector<int>>& residualGraph, vector<int>& parent, int source, int sink) {
+    int n = residualGraph.size();
+    vector<bool> visited(n, false);
+    stack<int> stk;
+    stk.push(source);
+    visited[source] = true;
+    parent[source] = -1;
 
-// Represents an edge in the graph
-struct Edge {
-    int u, v, capacity, flow;
-};
-
-// Function to perform BFS to find augmenting paths
-int bfs(vector<vector<int>>& graph, vector<int>& parent, int source, int sink) {
-    int n = graph.size();
-    fill(parent.begin(), parent.end(), -1);
-    parent[source] = -2;
-    queue<pair<int, int>> q;
-    q.push({source, INF});
-
-    while (!q.empty()) {
-        int u = q.front().first;
-        int flow = q.front().second;
-        q.pop();
-
-        for (int v = 1; v <= n; ++v) {
-            if (parent[v] == -1 && graph[u][v] > 0) {
+    while (!stk.empty()) {
+        int u = stk.top();
+        stk.pop();
+        for (int v = 0; v < n; ++v) {
+            if (!visited[v] && residualGraph[u][v] > 0) {
+                stk.push(v);
                 parent[v] = u;
-                int new_flow = min(flow, graph[u][v]);
+                visited[v] = true;
                 if (v == sink)
-                    return new_flow;
-                q.push({v, new_flow});
+                    return true;
             }
         }
     }
-    return 0;
+    return false;
 }
 
-// Implementation of Ford-Fulkerson algorithm
 int fordFulkerson(vector<vector<int>>& graph, int source, int sink) {
-    int n = graph.size() - 1; // Adjusting size
+    int n = graph.size();
+    vector<vector<int>> residualGraph(graph);
+
     int maxFlow = 0;
-    vector<int> parent(n + 1); // Adjusting size
+    vector<int> parent(n);
 
-    // Augment the flow until no more augmenting paths are found
-    int new_flow;
-    while (new_flow = bfs(graph, parent, source, sink)) {
-        maxFlow += new_flow;
-        int u = sink;
-        while (u != source) {
-            int v = parent[u];
-            graph[v][u] -= new_flow;
-            graph[u][v] += new_flow;
-            u = v;
+    while (dfs(residualGraph, parent, source, sink)) {
+        int pathFlow = INT_MAX;
+        for (int v = sink; v != source; v = parent[v]) {
+            int u = parent[v];
+            pathFlow = min(pathFlow, residualGraph[u][v]);
         }
-    }
 
+        for (int v = sink; v != source; v = parent[v]) {
+            int u = parent[v];
+            residualGraph[u][v] -= pathFlow;
+            residualGraph[v][u] += pathFlow;
+        }
+
+        maxFlow += pathFlow;
+    }
     return maxFlow;
 }
 
 int main() {
-    int n, m;
-    cout << "Enter the number of nodes and the number of edges: ";
-    cin >> n >> m;
-
-    // Initialize adjacency matrix with 0 capacities
-    vector<vector<int>> graph(n + 1, vector<int>(n + 1, 0)); // Adjusting size
-
-    cout << "Enter the edges in the format (u v w), where u->v has capacity w:\n";
-    for (int i = 0; i < m; ++i) {
-        int u, v, w;
-        cin >> u >> v >> w;
-        graph[u][v] = w;
+    int v, e, m, n, d, s, t;
+    cout << "Enter the number of vertices and edges :\n";
+    cin >> v >> e;
+    vector<vector<int>> graph(v, vector<int>(v, 0));
+    cout << "Enter the graph :\n";
+    for (int i = 0; i < e; i++) {
+        cin >> m >> n >> d;
+        graph[m][n] = d;
     }
-
-    int source, sink;
-    cout << "Enter the source and sink node indices: ";
-    cin >> source >> sink;
-
-    int maxFlow = fordFulkerson(graph, source, sink);
-    cout << "The maximum flow from source to sink is: " << maxFlow << endl;
-
+    cout << "Enter source and sink vertices :\n";
+    cin >> s >> t;
+    int maxFlow = fordFulkerson(graph, s, t);
+    cout << "Maximum flow from source to sink is " << maxFlow << endl;
     return 0;
 }
