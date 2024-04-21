@@ -79,6 +79,5 @@ int main()
     string result = longestCommonSubsequence(S1, S2);
     cout << "Length of Longest Common Subsequence : " << result.length() << endl;
     cout << "Longest common subsequence: " << result << endl;
-
     return 0;
 }
