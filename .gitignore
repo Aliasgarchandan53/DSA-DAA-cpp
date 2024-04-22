@@ -1,1 +1,13 @@
 *.exe
+
+# Ignore main.cpp
+main.cpp
+
+# Ignore input.txt
+input.txt
+
+# Ignore output.txt
+output.txt
+
+# Ignore .vscode folder
+.vscode/
