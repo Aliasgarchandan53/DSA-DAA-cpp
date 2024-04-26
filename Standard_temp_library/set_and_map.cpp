@@ -41,17 +41,17 @@ int main(){
     //map : a data structure storing data as {key-value} pair in a sorted order of keys*
     map <string , int> mp;
     mp["ali"]=20;
-    mp.emplace("abbas",22);
-    mp.insert({"taher",19});
+    mp.emplace("john",22);
+    mp.insert({"jacob",19});
     // for(auto it: mp){
     //     cout<<it.first<<" "<<it.second<<endl;
     // }
     map <int,string> mp2 ;
-    mp2.insert({1,"he"});
-    mp2.insert({2,"she"});
-    mp2.insert({3,"him"});
-    mp2.insert({4,"her"});
-    mp2.insert({5,"it"});
+    mp2.insert({1,"ab"});
+    mp2.insert({2,"bc"});
+    mp2.insert({3,"cd"});
+    mp2.insert({4,"de"});
+    mp2.insert({5,"ef"});
     auto its = mp2.find(2);//find accepts keys as arguments
     cout<<its->second<<endl;
     // for(auto it=mp.begin();it!=mp.end();it++)

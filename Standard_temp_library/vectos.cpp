@@ -59,7 +59,7 @@ int main(){
     2-give location of starting and ending locations to delete multiple elements
     */
 
-   vector <string> names ={"ali","anmol","anika","ammar","adnaan","ayaan"};
+   vector <string> names ={"abc","def","efg","ghi"};
    vector <string>::iterator str=names.begin();
    names.erase(names.begin());
    cout<<*str<<endl;

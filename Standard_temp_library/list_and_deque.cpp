@@ -21,7 +21,7 @@ int main(){
     //  more functions like clear, empty , iterator- begin,end ,insert,swap,size
 
     deque <string> dq; // double ended queue- same functions as list data structure
-    dq.push_back("alpha");
-    dq.push_front("gamma");
+    dq.push_back("a1a2");
+    dq.push_front("b1b2");
 
 }
