@@ -188,7 +188,11 @@ int isIntersect(Segment arr[], int n)
 
 // Driver code
 int main() {
-	Segment arr[] = { {{1, 5}, {4, 5}}, {{2, 5}, {10, 1}},{{3, 2}, {10, 3}},{{6, 4}, {9, 4}},{{7, 1}, {8, 1}}};
+	Segment arr[] = {
+    {{2,1}, {7,1}},
+    {{1, 1}, {3,3}},
+    {{4,2}, { 6,0}}
+};
 	int n = sizeof(arr)/sizeof(arr[0]);
 	cout<<"Number of intersection points: "<<isIntersect(arr, n);
 	return 0;
