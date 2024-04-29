@@ -1,58 +1,80 @@
-#include <iostream>
-#include <vector>
-#include <climits>
+/*Floyd Warshall Algorithm*/
 
+#include <bits/stdc++.h>
 using namespace std;
 
-void floydWarshall(int n, vector<vector<int>>& graph) {
-    // Initialize distance matrix with maximum possible distance
-    vector<vector<int>> distance(n, vector<int>(n, INT_MAX));
+struct Edge
+{
+    int u, v, w;
+};
 
-    // Fill distance matrix with given edges
-    for (const auto& edge : graph)
-        distance[edge[0] - 1][edge[1] - 1] = edge[2];
+void Floyd_Warshall(vector<Edge> &graph, int v, int e)
+{
 
-    // Set distance for direct edges and initialize diagonal to 0
-    for (int i = 0; i < n; ++i) {
+    // initialising distance matrix
+    vector<vector<int>> distance(v, vector<int>(v, INT_MAX));
+    vector<vector<int>> predecessor(v, vector<int>(v, INT_MIN));
+
+    for (auto edge : graph)
+    {
+        distance[edge.u - 1][edge.v - 1] = edge.w;
+        predecessor[edge.u-1][edge.v-1]=(edge.u-1);
+    }
+    for (int i = 0; i < v; i++){
         distance[i][i] = 0;
+        predecessor[i][i]=-1;
     }
 
-    // Floyd-Warshall algorithm
-    for (int k = 0; k < n; ++k) {
-        for (int i = 0; i < n; ++i) {
-            for (int j = 0; j < n; ++j) {
-                if (distance[i][k] != INT_MAX && distance[k][j] != INT_MAX &&
-                    distance[i][j] > distance[i][k] + distance[k][j]) {
-                    distance[i][j] = distance[i][k] + distance[k][j];
+    // floyd_warshall algorithm
+    for (int k = 0; k < v; k++)
+    {
+        for (int i = 0; i < v; i++)
+        {
+            for (int j = 0; j < v; j++)
+            {
+                if (distance[i][k] != INT_MAX &&
+                    distance[k][j] != INT_MAX &&
+                    distance[i][j] > (distance[i][k] + distance[k][j]))
+                {
+                    distance[i][j] = (distance[i][k] + distance[k][j]);
+                    predecessor[i][j]=k;
                 }
             }
         }
     }
 
-    // Print the distance matrix
-    cout<<"The distance matrix is as follows :\n";
-    for (int i = 0; i < n; ++i) {
-        for (int j = 0; j < n; ++j) {
-            if (distance[i][j] == INT_MAX)
-                cout << "INF ";
-            else
-                cout << distance[i][j] << " ";
+    //final distance matrix 
+    cout<<"Distance matrix:\n";
+    for(int i=0;i<v;i++){
+        for(int j=0;j<v;j++){
+            if(distance[i][j]==INT_MAX)
+                cout<<"INF\t";
+            else    
+                cout<<distance[i][j]<<"\t";
         }
-        cout << endl;
+        cout<<endl;
+    }
+    cout<<"Predecessor matrix :\n";
+    for(int i=0;i<v;i++){
+        for(int j=0;j<v;j++){
+            if(predecessor[i][j]==INT_MIN)
+                cout<<"NIL\t";
+            else if(predecessor[i][j]==-1)
+                cout<<"0\t";
+            else    
+                cout<<(predecessor[i][j]+1)<<"\t";
+        }
+        cout<<endl;
     }
 }
 
-int main() {
-    int n, m;
-    cout<<"Enter the number of nodes and edges : \n";   
-    cin >> n >> m;
-    cout<<"Enter the edges as 'A B weight' :\n";
-    vector<vector<int>> graph(m, vector<int>(3));
-    for (int i = 0; i < m; ++i) {
-        cin >> graph[i][0] >> graph[i][1] >> graph[i][2];
-    }
-
-    floydWarshall(n, graph);
-
+int main()
+{
+    int v, e;
+    cin >> v >> e;
+    vector<Edge> graph(e);
+    for (int i = 0; i < e; i++)
+        cin >> graph[i].u >> graph[i].v >> graph[i].w;
+    Floyd_Warshall(graph, v, e);
     return 0;
 }

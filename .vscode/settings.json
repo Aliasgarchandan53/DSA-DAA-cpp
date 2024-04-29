@@ -12,7 +12,8 @@
         "string_view": "cpp",
         "ranges": "cpp",
         "span": "cpp",
-        "new": "cpp"
+        "new": "cpp",
+        "iterator": "cpp"
     },
     "C_Cpp.errorSquiggles": "enabled"
 }
