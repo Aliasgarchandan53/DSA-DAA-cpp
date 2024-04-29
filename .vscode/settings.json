@@ -13,5 +13,6 @@
         "ranges": "cpp",
         "span": "cpp",
         "new": "cpp"
-    }
+    },
+    "C_Cpp.errorSquiggles": "enabled"
 }
