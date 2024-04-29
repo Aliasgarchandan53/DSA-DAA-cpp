@@ -1,9 +1,5 @@
-#include <iostream>
-#include <queue>
-#include <vector>
-#include <algorithm>
-#include <cmath>
-#include <functional>
+/*Sweeping line algorithm */
+#include <bits/stdc++.h>
 using namespace std;
 
 // Structure to represent a point
@@ -11,7 +7,7 @@ struct Point {
     int x, y;
 
     // Overload the equality operator to compare points
-    bool operator==(const Point& other) const {
+    bool operator==(Point& other) {
         return x == other.x && y == other.y;
     }
 };
@@ -30,7 +26,7 @@ struct Event {
 
 // Comparator for sorting line segments based on their starting y-coordinate
 struct SegmentComparator {
-    bool operator()(const LineSegment& a, const LineSegment& b) const {
+    bool operator()(LineSegment& a, LineSegment& b){
         return a.start.y < b.start.y;
     }
 };
@@ -81,25 +77,31 @@ bool doIntersect(LineSegment p, LineSegment q, Point& intersection) {
     return false;
 }
 
+bool compareEvents(Event &a,Event &b){
+    return a.point.x < b.point.x;
+}
+
+struct pqComparator{
+    bool operator()(Event &a,Event &b){
+     return a.point.y > b.point.y;
+    }
+};
+
 // Function to find intersections using the sweeping line technique
 void findIntersections(vector<pair<Point, Point>> lines) {
     vector<Event> events;
 
     // Create events for start and end points of each line segment
     for (size_t i = 0; i < lines.size(); ++i) {
-        events.push_back({lines[i].first, static_cast<int>(i), true});
-        events.push_back({lines[i].second, static_cast<int>(i), false});
+        events.push_back({lines[i].first, int(i), true});
+        events.push_back({lines[i].second, int(i), false});
     }
 
     // Sort events based on their x-coordinate
-    sort(events.begin(), events.end(), [](const Event& a, const Event& b) {
-        return a.point.x < b.point.x;
-    });
+    sort(events.begin(), events.end(), compareEvents ); 
 
     // Priority queue to store active segments based on their ending y-coordinate
-    priority_queue<Event, vector<Event>, function<bool(Event, Event)>> pq([](const Event& a, const Event& b) {
-        return a.point.y > b.point.y;
-    });
+    priority_queue<Event, vector<Event>, pqComparator> pq;
 
     // Traverse through all events
     for (const auto& event : events) {
@@ -122,7 +124,7 @@ void findIntersections(vector<pair<Point, Point>> lines) {
             pq.push(event); // Add the start event to the priority queue
         } else {
             // Remove the end event from the priority queue
-            priority_queue<Event, vector<Event>, function<bool(Event, Event)>> tmpPq;
+            priority_queue<Event, vector<Event>, pqComparator> tmpPq;
             while (!pq.empty()) {
                 if (!(pq.top().segmentIndex == event.segmentIndex && pq.top().isStart)) {
                     tmpPq.push(pq.top());
@@ -136,14 +138,12 @@ void findIntersections(vector<pair<Point, Point>> lines) {
 
 int main() {
     // Example line segments
-vector<pair<Point, Point>> test_case = {
-    {{0,1}, {3,1}},
-    {{4,1},{8,1}},
-    {{4,2}, { 6,0}},
-    {{0, 0}, {3,3}}
-};
-
-
+    int n;
+    cin>>n;
+    vector<pair<Point, Point>> test_case(n); 
+    for(int i=0;i<n;i++){
+        cin>>test_case[i].first.x>>test_case[i].first.y>>test_case[i].second.x>>test_case[i].second.y;
+    }
     findIntersections(test_case);
     return 0;
 }
