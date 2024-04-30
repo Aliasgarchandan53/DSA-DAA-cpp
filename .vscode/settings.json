@@ -13,7 +13,9 @@
         "ranges": "cpp",
         "span": "cpp",
         "new": "cpp",
-        "iterator": "cpp"
+        "iterator": "cpp",
+        "*.tcc": "cpp",
+        "regex": "cpp"
     },
     "C_Cpp.errorSquiggles": "enabled"
 }

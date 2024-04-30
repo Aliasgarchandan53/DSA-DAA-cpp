@@ -31,6 +31,16 @@ struct SegmentComparator {
     }
 };
 
+bool compareEvents(Event &a,Event &b){
+    return a.point.x < b.point.x;
+}
+
+struct pqComparator{
+    bool operator()(Event &a,Event &b){
+     return a.point.y > b.point.y;
+    }
+};
+
 // Function to check if a point q lies on the line segment pr
 bool onSegment(Point p, Point q, Point r) {
     if (q.x <= max(p.x, r.x) && q.x >= min(p.x, r.x) &&
@@ -57,16 +67,16 @@ bool doIntersect(LineSegment p, LineSegment q, Point& intersection) {
     // General case
     if (o1 != o2 && o3 != o4) {
         // Compute intersection point
-        double x1 = p.start.x, y1 = p.start.y;
-        double x2 = p.end.x, y2 = p.end.y;
-        double x3 = q.start.x, y3 = q.start.y;
-        double x4 = q.end.x, y4 = q.end.y;
+        int x1 = p.start.x, y1 = p.start.y;
+        int x2 = p.end.x, y2 = p.end.y;
+        int x3 = q.start.x, y3 = q.start.y;
+        int x4 = q.end.x, y4 = q.end.y;
 
-        double denom = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
+        int denom = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
         if (denom == 0) return false; // Lines are parallel or coincident
 
-        double t = ((x1 - x3) * (y3 - y4) - (y1 - y3) * (x3 - x4)) / denom;
-        double u = -((x1 - x2) * (y1 - y3) - (y1 - y2) * (x1 - x3)) / denom;
+        int t = ((x1 - x3) * (y3 - y4) - (y1 - y3) * (x3 - x4)) / denom;
+        int u = -((x1 - x2) * (y1 - y3) - (y1 - y2) * (x1 - x3)) / denom;
         if (t >= 0 && t <= 1 && u >= 0 && u <= 1) {
             intersection.x = x1 + t * (x2 - x1);
             intersection.y = y1 + t * (y2 - y1);
@@ -76,16 +86,6 @@ bool doIntersect(LineSegment p, LineSegment q, Point& intersection) {
 
     return false;
 }
-
-bool compareEvents(Event &a,Event &b){
-    return a.point.x < b.point.x;
-}
-
-struct pqComparator{
-    bool operator()(Event &a,Event &b){
-     return a.point.y > b.point.y;
-    }
-};
 
 // Function to find intersections using the sweeping line technique
 void findIntersections(vector<pair<Point, Point>> lines) {
@@ -104,13 +104,13 @@ void findIntersections(vector<pair<Point, Point>> lines) {
     priority_queue<Event, vector<Event>, pqComparator> pq;
 
     // Traverse through all events
-    for (const auto& event : events) {
+    for (auto event : events) {
         if (event.isStart) {
             // Check for intersections with active segments
             while (!pq.empty()) {
-                const auto activeEvent = pq.top();
+                Event activeEvent = pq.top();
                 pq.pop();
-                const auto& segment = lines[activeEvent.segmentIndex];
+                auto segment = lines[activeEvent.segmentIndex];
                 if (event.segmentIndex != activeEvent.segmentIndex) {
                     Point intersection;
                     if (doIntersect({event.point, lines[event.segmentIndex].second}, {segment.first, segment.second}, intersection)) {
@@ -118,20 +118,20 @@ void findIntersections(vector<pair<Point, Point>> lines) {
                         cout << "Line segments involved:\n";
                         cout << "Segment 1: (" << event.point.x << ", " << event.point.y << ") to (" << lines[event.segmentIndex].second.x << ", " << lines[event.segmentIndex].second.y << ")\n";
                         cout << "Segment 2: (" << segment.first.x << ", " << segment.first.y << ") to (" << segment.second.x << ", " << segment.second.y << ")\n";
-                    }
+                    } 
                 }
             }
             pq.push(event); // Add the start event to the priority queue
         } else {
             // Remove the end event from the priority queue
-            priority_queue<Event, vector<Event>, pqComparator> tmpPq;
+            priority_queue<Event, vector<Event>, pqComparator> tempPq;
             while (!pq.empty()) {
                 if (!(pq.top().segmentIndex == event.segmentIndex && pq.top().isStart)) {
-                    tmpPq.push(pq.top());
+                    tempPq.push(pq.top());
                 }
                 pq.pop();
             }
-            swap(pq, tmpPq);
+            swap(pq, tempPq);
         }
     }
 }
