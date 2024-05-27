@@ -94,3 +94,4 @@ int main()
     cout << "Solutions to the N-Queens problem:" << endl;
     printBoards(solutions);
 }
+
